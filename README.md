@@ -20,7 +20,13 @@ To get the application running locally, you need to have Docker and Docker Compo
     cd truelinks
     ```
 
-2.  **Build and run the application using Docker Compose:**
+2.  **Set up your environment variables:**
+    Create a file named `.env` in the root of the project and add your OpenAI API key:
+    ```
+    OPENAI_API_KEY=your_openai_api_key_here
+    ```
+
+3.  **Build and run the application using Docker Compose:**
     ```sh
     docker-compose up --build
     ```
