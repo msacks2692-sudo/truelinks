@@ -1,14 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import styles from './Navbar.module.css';
 
 function Navbar() {
   return (
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        <li><Link to="/register">Register</Link></li>
-        <li><Link to="/profile">Profile</Link></li>
+    <nav className={styles.navbar}>
+      <Link to="/" className={styles.navLink}>
+        <h2>TrueLinks</h2>
+      </Link>
+      <ul className={styles.navList}>
+        <li><NavLink to="/" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Home</NavLink></li>
+        <li><NavLink to="/login" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Login</NavLink></li>
+        <li><NavLink to="/register" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Register</NavLink></li>
+        <li><NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Profile</NavLink></li>
       </ul>
     </nav>
   );
