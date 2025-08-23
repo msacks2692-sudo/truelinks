@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueLinks - AI Dating App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 15px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .heart {
+            color: #ff6b6b;
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.3);
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 70px;
+            margin-bottom: 25px;
+            color: #ff6b6b;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Demo */
+        .dashboard-demo {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .dashboard-demo h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .profile-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            position: relative;
+        }
+
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,107,107,0.8), rgba(255,142,142,0.8));
+        }
+
+        .profile-image span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-info {
+            padding: 30px;
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .compatibility {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .profile-bio {
+            margin-bottom: 25px;
+            opacity: 0.8;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .interest-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .interest-tag:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .pass-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .pass-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .like-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .like-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+
+        .ai-insights {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .ai-insights h3 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #ff6b6b;
+            font-size: 1.5rem;
+        }
+
+        .ai-icon {
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+
+        .insight-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .insight-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ff6b6b;
+        }
+
+        .insight-text {
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .tech-stack h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .tech-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .tech-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ff6b6b;
+        }
+
+        .tech-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .cta-btn {
+            animation: fadeInUp 1s ease-out 0.4s both, pulse 2s ease-in-out infinite 1.4s;
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .success-message.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="heart">❤️</span>
+                TrueLinks
+            </div>
+            <div class="nav-buttons">
+                <a href="#login" class="btn btn-secondary">Login</a>
+                <a href="#register" class="btn btn-primary">Get Started</a>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Find Your True Match</h1>
+            <p>AI-powered dating that learns your preferences and matches you based on activities, not just looks</p>
+            <a href="#dashboard" class="cta-btn">Start Your Journey</a>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Learning</h3>
+                <p>Our AI learns your preferences from your activities, conversations, and interactions to find better matches.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💕</div>
+                <h3>Smart Matching</h3>
+                <p>Get matched with people who share your interests and lifestyle, not just appearance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Safe & Secure</h3>
+                <p>Your privacy and security are our top priorities with advanced protection measures.</p>
+            </div>
+        </section>
+
+        <!-- Dashboard Demo -->
+        <section class="dashboard-demo">
+            <h2>AI-Powered Matching Interface</h2>
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <div class="profile-image">
+                        <span>👩‍💼</span>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">Sarah Johnson, 28</div>
+                        <div class="compatibility">92% Match</div>
+                        <div class="profile-bio">
+                            Adventure seeker and coffee enthusiast. Love hiking, photography, and trying new restaurants. Always looking for new experiences and meaningful connections.
+                        </div>
+                        <div class="interests">
+                            <span class="interest-tag">Hiking</span>
+                            <span class="interest-tag">Photography</span>
+                            <span class="interest-tag">Coffee</span>
+                            <span class="interest-tag">Travel</span>
+                            <span class="interest-tag">Cooking</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn pass-btn">✕</button>
+                            <button class="action-btn like-btn">❤️</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-insights">
+                    <h3><span class="ai-icon">🧠</span>AI Insights</h3>
+                    <div class="insight-item">
+                        <div class="insight-label">Shared Interests: 3/4</div>
+                        <div class="insight-text">You both love travel and trying new experiences</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-label">Communication Style: Compatible</div>
+                        <div class="insight-text">Both prefer meaningful conversations over small talk</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-label">Lifestyle Match: High</div>
+                        <div class="insight-text">Similar daily routines and weekend activities</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-label">Personality: Complementary</div>
+                        <div class="insight-text">Your introvert/extrovert balance works well together</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="tech-stack">
+            <h2>Built With Modern Technology</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Frontend</h3>
+                    <p>React 18, Material-UI, Framer Motion, React Router, Axios</p>
+                </div>
+                <div class="tech-card">
+                    <h3>Backend</h3>
+                    <p>Node.js, Express.js, OpenAI API, MongoDB, JWT Authentication</p>
+                </div>
+                <div class="tech-card">
+                    <h3>Features</h3>
+                    <p>AI matching, user authentication, real-time messaging, photo uploads, push notifications</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage"></div>
+
+    <script>
+        // Add interactivity
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const message = document.getElementById('successMessage');
+                if (this.classList.contains('like-btn')) {
+                    message.textContent = '❤️ You liked this profile!';
+                    message.style.background = '#4CAF50';
+                } else {
+                    message.textContent = '✕ You passed on this profile';
+                    message.style.background = '#f44336';
+                }
+                message.classList.add('show');
+                setTimeout(() => {
+                    message.classList.remove('show');
+                }, 3000);
+            });
+        });
+
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const message = document.getElementById('successMessage');
+                message.textContent = '🚀 This would navigate to the ' + this.textContent + ' page';
+                message.style.background = '#2196F3';
+                message.classList.add('show');
+                setTimeout(() => {
+                    message.classList.remove('show');
+                }, 3000);
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards and sections
+        document.querySelectorAll('.feature-card, .dashboard-demo, .tech-stack').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add some fun interactions
+        document.querySelectorAll('.interest-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.style.background = '#ff6b6b';
+                this.style.color = 'white';
+                setTimeout(() => {
+                    this.style.background = 'rgba(255,255,255,0.2)';
+                    this.style.color = 'white';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
