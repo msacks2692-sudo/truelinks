@@ -1,0 +1,28 @@
+.navbar {
+  background-color: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navLink {
+  font-weight: 500;
+  color: var(--primary-color);
+  transition: color 0.2s ease-in-out;
+}
+
+.navLink:hover {
+  color: var(--secondary-color);
+}
+
+.active {
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
+}
