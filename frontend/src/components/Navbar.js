@@ -13,6 +13,7 @@ function Navbar() {
         <li><NavLink to="/login" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Login</NavLink></li>
         <li><NavLink to="/register" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Register</NavLink></li>
         <li><NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Profile</NavLink></li>
+        <li><NavLink to="/studio" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>Studio</NavLink></li>
       </ul>
     </nav>
   );

@@ -1,13 +1,35 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from openai import OpenAI
+from audio_processor import separate_audio, OUTPUT_DIR
 
 app = Flask(__name__)
 CORS(app)
 
 # Initialize the OpenAI client
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+@app.route('/static/audio/<path:filename>')
+def serve_audio(filename):
+    return send_from_directory(OUTPUT_DIR, filename)
+
+@app.route('/api/separate', methods=['POST'])
+def separate():
+    data = request.json
+    url = data.get('url')
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+
+    # Use mock=True if environment variable MOCK_AUDIO is set
+    # or if we want to default to mock for this environment
+    use_mock = os.environ.get('MOCK_AUDIO', 'False').lower() == 'true'
+
+    try:
+        stems = separate_audio(url, mock=use_mock)
+        return jsonify({'stems': stems})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/hello')
 def hello():
