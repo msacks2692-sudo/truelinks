@@ -3,3 +3,29 @@
   margin: 0 auto;
   padding: 2rem;
 }
+
+.skipLink {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skipLink:focus {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  padding: 1rem;
+  background: var(--white);
+  z-index: 1000;
+  border: 3px solid var(--primary-color);
+  outline-offset: 2px;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
