@@ -3,3 +3,23 @@
   margin: 0 auto;
   padding: 2rem;
 }
+
+.skipLink {
+  position: absolute;
+  top: -200px;
+  left: 0;
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 1rem;
+  z-index: 1000;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0 0 5px 5px;
+  transition: top 0.2s ease-out;
+}
+
+.skipLink:focus {
+  top: 0;
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+}
