@@ -3,3 +3,21 @@
   margin: 0 auto;
   padding: 2rem;
 }
+
+.skipLink {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: 1000;
+  padding: 1rem;
+  background-color: var(--white);
+  color: var(--primary-color);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--secondary-color);
+}
+
+.skipLink:focus {
+  top: 1rem;
+  left: 1rem;
+}
