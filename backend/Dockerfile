@@ -1,5 +1,6 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -16,3 +17,12 @@ EXPOSE 5000
 
 # Define the command to run the application
 CMD ["python", "app.py"]
+# Create a non-root user and switch to it
+RUN useradd -m appuser && chown -R appuser:appuser /app
+USER appuser
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Define the command to run the application using Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

@@ -3,6 +3,11 @@ from flask import Flask, request, jsonify
 from openai import OpenAI
 
 app = Flask(__name__)
+from flask_cors import CORS
+from openai import OpenAI
+
+app = Flask(__name__)
+CORS(app)
 
 # Initialize the OpenAI client
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -17,6 +22,8 @@ def generate_icebreaker():
     # Get interests from request body, defaulting to empty list if not present
     data = request.get_json() or {}
     interests = data.get('interests', [])
+    # For now, we'll use mock data. In the future, this would come from the request.
+    interests = ["hiking", "reading", "cooking"]
 
     prompt = f"Write a short, friendly, and engaging icebreaker for a dating app. The user's interests are: {', '.join(interests)}. The icebreaker should be based on one or more of these interests."
 

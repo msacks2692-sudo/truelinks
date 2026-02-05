@@ -41,6 +41,17 @@ function IcebreakerGenerator() {
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       {icebreaker && (
         <div className={styles.result}>
+      <button
+        onClick={handleClick}
+        disabled={isLoading}
+        aria-busy={isLoading}
+        className={styles.button}
+      >
+        {isLoading ? 'Generating...' : 'Generate Icebreaker'}
+      </button>
+      {error && <p role="alert" style={{ color: 'red' }}>Error: {error}</p>}
+      {icebreaker && (
+        <div className={styles.result} aria-live="polite">
           <h3>Here's an icebreaker for you:</h3>
           <p>{icebreaker}</p>
         </div>
