@@ -71,4 +71,39 @@ describe('IcebreakerGenerator Accessibility', () => {
     const error = await screen.findByText(/Error: Network error/);
     expect(error).toHaveAttribute('role', 'alert');
   });
+
+  test('copy button copies text to clipboard', async () => {
+    const mockWriteText = jest.fn();
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: mockWriteText,
+      },
+    });
+
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ icebreaker: 'Copy this text' })
+    });
+
+    render(<IcebreakerGenerator />);
+
+    // Generate icebreaker first
+    fireEvent.click(screen.getByRole('button', { name: /generate icebreaker/i }));
+
+    await screen.findByText('Copy this text');
+
+    // Find copy button
+    const copyButton = screen.getByRole('button', { name: /copy to clipboard/i });
+    expect(copyButton).toBeInTheDocument();
+
+    // Click copy
+    await act(async () => {
+      fireEvent.click(copyButton);
+    });
+
+    expect(mockWriteText).toHaveBeenCalledWith('Copy this text');
+
+    // Check if label changed
+    expect(screen.getByRole('button', { name: /copied/i })).toBeInTheDocument();
+  });
 });
