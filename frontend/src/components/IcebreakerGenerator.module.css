@@ -31,4 +31,44 @@
   padding: 1rem;
   background-color: #f8f9f9;
   border-left: 4px solid var(--secondary-color);
+  position: relative;
+}
+
+.copyButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-color);
+  opacity: 0.6;
+  transition: all 0.2s ease-in-out;
+  padding: 8px;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyButton:hover {
+  opacity: 1;
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.copyButton:focus-visible {
+  outline: 2px solid var(--secondary-color);
+  opacity: 1;
+}
+
+.feedback {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
 }

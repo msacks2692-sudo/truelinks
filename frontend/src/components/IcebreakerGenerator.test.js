@@ -71,4 +71,32 @@ describe('IcebreakerGenerator Accessibility', () => {
     const error = await screen.findByText(/Error: Network error/);
     expect(error).toHaveAttribute('role', 'alert');
   });
+
+  test('copy button copies text to clipboard', async () => {
+    const icebreakerText = 'Test Icebreaker';
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ icebreaker: icebreakerText })
+    });
+
+    const writeTextMock = jest.fn().mockResolvedValue(undefined);
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: writeTextMock,
+      },
+    });
+
+    render(<IcebreakerGenerator />);
+    const generateButton = screen.getByRole('button', { name: /generate icebreaker/i });
+
+    fireEvent.click(generateButton);
+
+    await screen.findByText(icebreakerText);
+
+    const copyButton = screen.getByRole('button', { name: /copy icebreaker to clipboard/i });
+    fireEvent.click(copyButton);
+
+    expect(writeTextMock).toHaveBeenCalledWith(icebreakerText);
+    expect(await screen.findByText('Copied!')).toBeInTheDocument();
+  });
 });
