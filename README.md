@@ -37,3 +37,7 @@ The frontend will be available at [http://localhost:3000](http://localhost:3000)
 
 -   **Frontend:** A React application that serves the user interface.
 -   **Backend:** A Flask application that provides the API for the frontend.
+
+## Accessibility
+
+-   Includes "Skip to content" functionality for keyboard users.
