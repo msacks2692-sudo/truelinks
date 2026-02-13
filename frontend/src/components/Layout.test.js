@@ -6,7 +6,7 @@ import Layout from './Layout';
 describe('Layout Component', () => {
   test('renders skip to content link', () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Layout />
       </MemoryRouter>
     );
@@ -18,7 +18,7 @@ describe('Layout Component', () => {
 
   test('main content area has correct id', () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Layout />
       </MemoryRouter>
     );
