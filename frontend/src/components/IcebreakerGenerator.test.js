@@ -8,6 +8,11 @@ global.fetch = jest.fn();
 describe('IcebreakerGenerator Accessibility', () => {
   beforeEach(() => {
     fetch.mockClear();
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+      },
+    });
   });
 
   test('button indicates loading state via aria-busy', async () => {
@@ -70,5 +75,36 @@ describe('IcebreakerGenerator Accessibility', () => {
 
     const error = await screen.findByText(/Error: Network error/);
     expect(error).toHaveAttribute('role', 'alert');
+  });
+
+  test('allows user to copy icebreaker to clipboard', async () => {
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ icebreaker: 'Copy me!' })
+    });
+
+    render(<IcebreakerGenerator />);
+    const generateButton = screen.getByRole('button', { name: /generate icebreaker/i });
+
+    fireEvent.click(generateButton);
+
+    await screen.findByText('Copy me!');
+    const copyButton = screen.getByRole('button', { name: /copy icebreaker to clipboard/i });
+
+    expect(copyButton).toBeInTheDocument();
+    expect(copyButton).toHaveTextContent(/copy/i);
+
+    await act(async () => {
+        fireEvent.click(copyButton);
+    });
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('Copy me!');
+
+    // Wait for state update to "Copied!"
+    await waitFor(() => {
+        expect(screen.getByRole('button', { name: /copied to clipboard/i })).toBeInTheDocument();
+    });
+
+    expect(screen.getByText(/copied!/i)).toBeInTheDocument();
   });
 });
