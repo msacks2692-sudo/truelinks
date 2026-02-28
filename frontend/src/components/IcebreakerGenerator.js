@@ -5,6 +5,7 @@ function IcebreakerGenerator() {
   const [icebreaker, setIcebreaker] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   const handleClick = async () => {
     setIsLoading(true);
@@ -25,12 +26,29 @@ function IcebreakerGenerator() {
 
       const data = await response.json();
       setIcebreaker(data.icebreaker);
+      setCopied(false);
     } catch (err) {
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
   };
+
+  const handleCopy = () => {
+    if (icebreaker) {
+      navigator.clipboard.writeText(icebreaker);
+      setCopied(true);
+    }
+  };
+
+  // Ensure cleanup on unmount for the copy timeout
+  React.useEffect(() => {
+    let timeoutId;
+    if (copied) {
+      timeoutId = setTimeout(() => setCopied(false), 2000);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [copied]);
 
   return (
     <div className={styles.generator}>
@@ -48,6 +66,13 @@ function IcebreakerGenerator() {
         <div className={styles.result} aria-live="polite">
           <h3>Here's an icebreaker for you:</h3>
           <p>{icebreaker}</p>
+          <button
+            onClick={handleCopy}
+            className={styles.copyButton}
+            aria-label={copied ? "Copied icebreaker to clipboard" : "Copy icebreaker to clipboard"}
+          >
+            {copied ? 'Copied!' : 'Copy to Clipboard'}
+          </button>
         </div>
       )}
     </div>
