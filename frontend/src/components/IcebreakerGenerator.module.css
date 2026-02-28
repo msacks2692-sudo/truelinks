@@ -31,4 +31,24 @@
   padding: 1rem;
   background-color: #f8f9f9;
   border-left: 4px solid var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.copyButton {
+  background-color: var(--white);
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  align-self: center;
+}
+
+.copyButton:hover {
+  background-color: var(--background-color);
 }
