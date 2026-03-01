@@ -71,4 +71,44 @@ describe('IcebreakerGenerator Accessibility', () => {
     const error = await screen.findByText(/Error: Network error/);
     expect(error).toHaveAttribute('role', 'alert');
   });
+
+  test('copy button updates text and aria-label temporarily', async () => {
+    jest.useFakeTimers();
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: jest.fn().mockResolvedValue(undefined),
+      },
+    });
+
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ icebreaker: 'Copy this test icebreaker' })
+    });
+
+    render(<IcebreakerGenerator />);
+    const generateButton = screen.getByRole('button', { name: /generate icebreaker/i });
+    fireEvent.click(generateButton);
+
+    const copyButton = await screen.findByRole('button', { name: /copy icebreaker to clipboard/i });
+    expect(copyButton).toBeInTheDocument();
+
+    // Trigger copy
+    await act(async () => {
+      fireEvent.click(copyButton);
+    });
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('Copy this test icebreaker');
+    expect(copyButton).toHaveTextContent('Copied!');
+    expect(copyButton).toHaveAttribute('aria-label', 'Copied to clipboard');
+
+    // Advance timers by 2 seconds
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(copyButton).toHaveTextContent('Copy to Clipboard');
+    expect(copyButton).toHaveAttribute('aria-label', 'Copy icebreaker to clipboard');
+
+    jest.useRealTimers();
+  });
 });
