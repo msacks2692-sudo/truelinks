@@ -1,3 +1,4 @@
 ## 2026-01-18 - Icebreaker Accessibility
 **Learning:** `aria-live` is crucial for async content updates like generated text, which otherwise go unnoticed by screen readers. `aria-busy` on the triggering button provides immediate feedback while waiting.
 **Action:** Always add `aria-live` to result containers and `aria-busy` to action buttons for async operations.
+## 2024-03-02 - Copy to Clipboard Accessibility\n**Learning:** The copy-to-clipboard functionality requires aria-labels to dynamically update to reflect the state (e.g., 'Copied to clipboard'). Reverting the state after 2 seconds via a timeout is a good practice for continuous usability without cluttering the UI.\n**Action:** Ensure dynamic elements like copy buttons correctly update their accessibility text along with visual feedback.
