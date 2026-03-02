@@ -5,6 +5,7 @@ function IcebreakerGenerator() {
   const [icebreaker, setIcebreaker] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleClick = async () => {
     setIsLoading(true);
@@ -32,6 +33,18 @@ function IcebreakerGenerator() {
     }
   };
 
+  const handleCopy = async () => {
+    if (icebreaker) {
+      try {
+        await navigator.clipboard.writeText(icebreaker);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+      }
+    }
+  };
+
   return (
     <div className={styles.generator}>
       <h2>AI Icebreaker Generator</h2>
@@ -48,6 +61,13 @@ function IcebreakerGenerator() {
         <div className={styles.result} aria-live="polite">
           <h3>Here's an icebreaker for you:</h3>
           <p>{icebreaker}</p>
+          <button
+            onClick={handleCopy}
+            className={styles.copyButton}
+            aria-label={isCopied ? "Copied to clipboard" : "Copy icebreaker to clipboard"}
+          >
+            {isCopied ? 'Copied!' : 'Copy'}
+          </button>
         </div>
       )}
     </div>
