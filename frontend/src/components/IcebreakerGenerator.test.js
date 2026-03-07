@@ -72,3 +72,57 @@ describe('IcebreakerGenerator Accessibility', () => {
     expect(error).toHaveAttribute('role', 'alert');
   });
 });
+
+describe('IcebreakerGenerator Copy to Clipboard', () => {
+  beforeEach(() => {
+    fetch.mockClear();
+    jest.useFakeTimers();
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: jest.fn().mockResolvedValue(undefined),
+      },
+    });
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+    jest.restoreAllMocks();
+  });
+
+  test('copies text, updates UI to "Copied!", and reverts after 2 seconds', async () => {
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ icebreaker: 'A cool icebreaker to copy.' })
+    });
+
+    render(<IcebreakerGenerator />);
+
+    // Generate icebreaker
+    fireEvent.click(screen.getByRole('button', { name: /generate icebreaker/i }));
+
+    // Wait for the icebreaker and the copy button to appear
+    const copyButton = await screen.findByRole('button', { name: /copy to clipboard/i });
+    expect(copyButton).toHaveTextContent('Copy to Clipboard');
+
+    // Click the copy button
+    await act(async () => {
+      fireEvent.click(copyButton);
+    });
+
+    // Check if clipboard API was called
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('A cool icebreaker to copy.');
+
+    // Check if UI updated immediately
+    expect(copyButton).toHaveTextContent('Copied!');
+    expect(copyButton).toHaveAttribute('aria-label', 'Copied to clipboard');
+
+    // Fast-forward time by 2 seconds
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    // Check if UI reverted
+    expect(copyButton).toHaveTextContent('Copy to Clipboard');
+    expect(copyButton).toHaveAttribute('aria-label', 'Copy to clipboard');
+  });
+});
