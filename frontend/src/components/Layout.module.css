@@ -1,3 +1,19 @@
+.skipLink {
+  position: absolute;
+  top: -200px;
+  left: 0;
+  padding: 1rem;
+  background: var(--secondary-color, #3498db);
+  color: var(--white, #ffffff);
+  z-index: 1000;
+  text-decoration: none;
+  transition: top 0.3s ease-in-out;
+}
+
+.skipLink:focus {
+  top: 0;
+}
+
 .mainContent {
   max-width: 1200px;
   margin: 0 auto;
