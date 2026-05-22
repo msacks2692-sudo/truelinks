@@ -5,3 +5,7 @@
 ## 2026-03-04 - Copy to Clipboard Accessibility
 **Learning:** Copy to Clipboard functionality requires a specific UX pattern: visual feedback (text change to 'Copied!'), dynamic `aria-label`, and a 2-second timeout to revert the state. Unit tests for React components relying on this require `jest.useFakeTimers()` to verify state changes securely and efficiently.
 **Action:** Always implement dynamic `aria-label` and visual feedback timeouts for copy actions, and use `jest.useFakeTimers()` for testing the reverting logic.
+
+## 2026-05-18 - Skip Link Accessibility in React SPAs
+**Learning:** Native hash links often fail to move keyboard focus reliably in React Single Page Applications.
+**Action:** When implementing "Skip to content" links, use an `onClick` handler with a `ref` to programmatically call `.focus()` on the main container. The container needs `tabIndex={-1}` and `style={{ outline: 'none' }}` to accept focus smoothly without visual artifacts.
