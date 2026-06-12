@@ -1,3 +1,25 @@
+.skipLink {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 8px 16px;
+  z-index: 1000;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  transition: transform 0.3s ease-in-out;
+}
+
+.skipLink:focus {
+  transform: translate(-50%, 0);
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
 .mainContent {
   max-width: 1200px;
   margin: 0 auto;
