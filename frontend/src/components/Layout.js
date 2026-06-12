@@ -1,31 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import styles from './Layout.module.css';
 
 function Layout() {
-  const mainContentRef = useRef(null);
-
-  const handleSkipToMain = (e) => {
-    e.preventDefault();
-    if (mainContentRef.current) {
-      mainContentRef.current.focus();
-    }
-  };
-
   return (
     <div>
-      <a href="#main-content" className={styles.skipLink} onClick={handleSkipToMain}>
-        Skip to main content
-      </a>
       <Navbar />
-      <main
-        id="main-content"
-        className={styles.mainContent}
-        ref={mainContentRef}
-        tabIndex={-1}
-        style={{ outline: 'none' }}
-      >
+      <main className={styles.mainContent}>
         <Outlet />
       </main>
     </div>
